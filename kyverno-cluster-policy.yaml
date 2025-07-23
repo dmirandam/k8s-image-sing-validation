@@ -1,0 +1,33 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-signed-images
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: verify-signature
+    match:
+      any:
+      - resources:
+          kinds: [Pod, Deployment, StatefulSet]
+          namespaceSelector:
+            matchLabels:
+              signed-images: "enforce"
+    exclude:
+      any:
+      - resources:
+          namespaces: [kyverno, kube-system]
+
+    verifyImages:
+    - imageReferences:
+        - "registry.dmirandam.com/crypto/*"
+      mutateDigest: true
+      attestors:
+      - count: 1
+        entries:
+        - keyless:
+            issuer:  "https://token.actions.githubusercontent.com"
+            subject: "https://github.com/k8s-image-sing-validation/.github/workflows/main.yml@refs/heads/main"
+            rekor:    
+              url: https://rekor.sigstore.dev
