@@ -1,6 +1,6 @@
 # k8s-image-sing-validation
 
-Este repositorio contiene un ejemplo muy sencillo para construir, firmar y validar una imagen de contenedor dentro de un clúster de Kubernetes.
+Este repositorio contiene un ejemplo para construir, firmar y validar una imagen de contenedor dentro de un clúster de Kubernetes.
 
 El flujo completo se realiza con GitHub Actions, [cosign](https://github.com/sigstore/cosign) y una política de [Kyverno](https://kyverno.io/) que rechaza aquellas imágenes que no estén firmadas correctamente.
 
