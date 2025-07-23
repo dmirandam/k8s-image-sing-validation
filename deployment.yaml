@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-deployment
+  namespace: crypto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crypto
+  template:
+    metadata:
+      labels:
+        app: crypto
+    spec:
+      containers:
+        - name: crypto
+          image: registry.dmirandam.com/crypto/nginx:sign
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crypto
+  namespace: crypto
+spec:
+  selector:
+    app: crypto
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
