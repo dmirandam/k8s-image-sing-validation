@@ -31,7 +31,7 @@ jobs:
         IMAGE_NAME=${NEW_LINE%%:*}
         NEW_VER=${NEW_LINE#*:}
 
-        FINAL_TAG="${IMAGE_NAME}:${NEW_VER}${TAG_SUFFIX}"
+        FINAL_TAG="${IMAGE_NAME}:${NEW_VER}"
         FULL_IMAGE="${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${FINAL_TAG}"
 
         echo "FINAL_TAG=$FINAL_TAG"   >>"$GITHUB_ENV"
